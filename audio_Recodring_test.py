@@ -10,13 +10,15 @@ CHANNELS = 1
 RATE = 44100
 
 #
-RECORD_SECONDS = 30
+#RECORD_SECONDS = 30
 
 # Get the current date and time for use in the file name
 now = datetime.datetime.now()
 file_name = "recording.wav"
 
-def record_audio():
+
+
+def record_audio(RECORD_SECONDS):
     # Create a PyAudio object
     audio = pyaudio.PyAudio()
 

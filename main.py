@@ -11,9 +11,10 @@ import text_to_speech
 
 def system_response():
     while True:
-        user_input = input('Enter 1 to start recoding')
+        user_input = input('Enter 1 to start recoding \n')
         if user_input == '1':
-            audio_Recodring_test.record_audio()
+            RECORD_SECONDS = int(input('Enter RECORD_SECONDS: \n'))
+            audio_Recodring_test.record_audio(RECORD_SECONDS)
             text = speech_to_text.transcribe_audio_to_text('recording.wav') + ". CURRENT TIME : " + datetime.datetime.now().strftime("%H:%M:%S")
             print('Your Prompt is :  \n'+ text)
             chat_transcript = chatgpt_responce.gtp_responce(text)
