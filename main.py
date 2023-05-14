@@ -15,24 +15,32 @@ def system_response():
         if user_input == '1':
             RECORD_SECONDS = int(input('Enter RECORD_SECONDS: \n'))
             audio_Recodring_test.record_audio(RECORD_SECONDS)
-            text = speech_to_text.transcribe_audio_to_text('recording.wav') + ". CURRENT TIME : " + datetime.datetime.now().strftime("%H:%M:%S")
+            text = speech_to_text.transcribe_audio_to_text('recording.wav') + ". CURRENT TIME : " + datetime.datetime.now().strftime("%I:%M %p")
             print('Your Prompt is :  \n'+ text)
             chat_transcript = chatgpt_responce.gtp_responce(text)
             print(chat_transcript[0] + "\n")
             assistant_responce = chat_transcript[1]
+            try:
+                index = assistant_responce.index(":")
+                substring = assistant_responce[:index]
+                print(substring)
+            except ValueError:
+                substring = assistant_responce[:100]
+
             text_to_speech.text_to_speech(assistant_responce)
+
         else:
             print('Invalid Input try again......')
 
 def print_current_time():
     next_print_time = datetime.datetime.now() + datetime.timedelta(minutes=30)
-    print('CURRENT TIME : '+ datetime.datetime.now().strftime("%H:%M:%S"))
+    print('CURRENT TIME : '+ datetime.datetime.now().strftime("%I:%M %p"))
 
     while True:
         current_time = datetime.datetime.now()
 
         if current_time >= next_print_time:
-            Time_update  = "CURRENT TIME : " + current_time.strftime("%H:%M:%S")
+            Time_update  = "CURRENT TIME : " + current_time.strftime("%I:%M %p")
             print(Time_update)
             next_print_time = current_time + datetime.timedelta(minutes=30)
             chat_transcript = chatgpt_responce.gtp_responce(Time_update)
@@ -40,7 +48,7 @@ def print_current_time():
 
 
         if current_time.hour == 8 and current_time.minute == 0 and current_time.second == 0:
-            Day_time_update = "TOMORROW BEGINS. CURRENT TIME : " + current_time.strftime("%H:%M:%S")
+            Day_time_update = "TOMORROW BEGINS. CURRENT TIME : " + current_time.strftime("%I:%M %p")
             print(Day_time_update)
             chat_transcript = chatgpt_responce.gtp_responce(Day_time_update)
             print(chat_transcript+ '\n')
